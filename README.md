@@ -46,7 +46,7 @@ PFM-GM/
 ## Customization
 
 ### Update Phone Number
-The phone number 845-834-8101 is used throughout the site.
+The phone number 878-287-2502 is used throughout the site.
 
 ### Update Counter Numbers
 In `script.js`, update the counter values:

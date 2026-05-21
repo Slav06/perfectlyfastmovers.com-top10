@@ -318,11 +318,11 @@ if (quoteForm) {
                 // Redirect to thank-you page (staff can customize content there)
                 window.location.href = 'thank-you.html';
             } else {
-                alert('There was a problem submitting your request. Please try again or call us at 845-834-8101. Error: ' + message);
+                alert('There was a problem submitting your request. Please try again or call us at 878-287-2502. Error: ' + message);
             }
         } catch (err) {
             console.error('Lead post error:', err);
-            alert('Could not submit form. Please check your connection and try again, or call us at 845-834-8101.');
+            alert('Could not submit form. Please check your connection and try again, or call us at 878-287-2502.');
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
