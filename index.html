@@ -551,6 +551,53 @@
         </div>
     </footer>
 
+    <!-- Welcome offer popup -->
+    <div id="welcomeOffer" class="welcome-offer" role="dialog" aria-modal="true" aria-labelledby="welcomeOfferTitle" hidden>
+        <div class="welcome-offer-backdrop" data-close="1"></div>
+        <div class="welcome-offer-card">
+            <button type="button" class="welcome-offer-close" aria-label="Close" data-close="1">&times;</button>
+            <p class="welcome-offer-greeting">Hey, there! Ready to save?</p>
+            <h2 id="welcomeOfferTitle" class="welcome-offer-title">Save Big on Your Move – Call Today and Get $1000 Off!</h2>
+            <p class="welcome-offer-body">Take advantage of incredible savings on your next move. Call today and enjoy $1000 off our expert moving services!</p>
+            <a href="tel:+18779638087" class="welcome-offer-phone">(877) 963-8087</a>
+        </div>
+    </div>
+
+    <style>
+        .welcome-offer { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+        .welcome-offer[hidden] { display: none; }
+        .welcome-offer-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.65); animation: welcomeFade 0.25s ease-out; }
+        .welcome-offer-card { position: relative; background: #fff; border-radius: 16px; padding: 2.5rem 2rem 2rem; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.4); animation: welcomePop 0.3s ease-out; }
+        .welcome-offer-close { position: absolute; top: 0.75rem; right: 1rem; background: transparent; border: 0; font-size: 2rem; line-height: 1; cursor: pointer; color: #666; padding: 0; width: 2rem; height: 2rem; }
+        .welcome-offer-close:hover { color: #000; }
+        .welcome-offer-greeting { font-size: 1.1rem; color: #555; margin: 0 0 0.5rem; font-weight: 500; }
+        .welcome-offer-title { font-size: 1.6rem; color: #c0392b; margin: 0 0 1rem; line-height: 1.3; font-weight: 800; }
+        .welcome-offer-body { font-size: 1rem; color: #333; margin: 0 0 1.5rem; line-height: 1.5; }
+        .welcome-offer-phone { display: inline-block; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: #fff; font-size: 1.6rem; font-weight: 800; padding: 0.9rem 1.75rem; border-radius: 999px; text-decoration: none; box-shadow: 0 8px 20px rgba(231,76,60,0.4); transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .welcome-offer-phone:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(231,76,60,0.5); }
+        @keyframes welcomeFade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes welcomePop { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+        @media (max-width: 480px) { .welcome-offer-title { font-size: 1.35rem; } .welcome-offer-phone { font-size: 1.4rem; padding: 0.8rem 1.4rem; } }
+    </style>
+
+    <script>
+        (function() {
+            var modal = document.getElementById('welcomeOffer');
+            if (!modal) return;
+            if (sessionStorage.getItem('welcomeOfferShown') === '1') return;
+            setTimeout(function() {
+                modal.hidden = false;
+                sessionStorage.setItem('welcomeOfferShown', '1');
+            }, 600);
+            modal.addEventListener('click', function(e) {
+                if (e.target.getAttribute('data-close') === '1') modal.hidden = true;
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modal.hidden) modal.hidden = true;
+            });
+        })();
+    </script>
+
     <script src="script.js"></script>
 </body>
 </html>
