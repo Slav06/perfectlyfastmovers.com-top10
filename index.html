@@ -556,28 +556,72 @@
         <div class="welcome-offer-backdrop" data-close="1"></div>
         <div class="welcome-offer-card">
             <button type="button" class="welcome-offer-close" aria-label="Close" data-close="1">&times;</button>
-            <p class="welcome-offer-greeting">Hey, there! Ready to save?</p>
-            <h2 id="welcomeOfferTitle" class="welcome-offer-title">Save Big on Your Move – Call Today and Get $1000 Off!</h2>
-            <p class="welcome-offer-body">Take advantage of incredible savings on your next move. Call today and enjoy $1000 off our expert moving services!</p>
-            <a href="tel:+18779638087" class="welcome-offer-phone">(877) 963-8087</a>
+            <div class="welcome-offer-image">
+                <img src="hero-family.jpg" alt="Happy family unpacking after their move" loading="eager">
+                <div class="welcome-offer-badge">LIMITED TIME</div>
+                <div class="welcome-offer-savings">
+                    <span class="welcome-offer-savings-amount">$1,000</span>
+                    <span class="welcome-offer-savings-label">OFF</span>
+                </div>
+            </div>
+            <div class="welcome-offer-content">
+                <p class="welcome-offer-greeting">👋 Hey there! Ready to save?</p>
+                <h2 id="welcomeOfferTitle" class="welcome-offer-title">Save Big on Your Move – Get <span class="welcome-offer-highlight">$1,000 Off</span> Today!</h2>
+                <p class="welcome-offer-body">Take advantage of incredible savings on your next move. Call now and enjoy <strong>$1,000 off</strong> our expert moving services — for a limited time only.</p>
+                <div class="welcome-offer-stars">
+                    <span class="welcome-offer-rating">4.9</span>
+                    <span class="welcome-offer-star-icons">★★★★★</span>
+                    <span class="welcome-offer-reviews">Trusted by 10,000+ happy families</span>
+                </div>
+                <a href="tel:+18782872502" class="welcome-offer-phone">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    Call Now: 878-287-2502
+                </a>
+                <p class="welcome-offer-disclaimer">✓ Licensed & Insured · ✓ DOT 3516489 · ✓ No Hidden Fees</p>
+            </div>
         </div>
     </div>
 
     <style>
         .welcome-offer { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1rem; }
         .welcome-offer[hidden] { display: none; }
-        .welcome-offer-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.65); animation: welcomeFade 0.25s ease-out; }
-        .welcome-offer-card { position: relative; background: #fff; border-radius: 16px; padding: 2.5rem 2rem 2rem; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.4); animation: welcomePop 0.3s ease-out; }
-        .welcome-offer-close { position: absolute; top: 0.75rem; right: 1rem; background: transparent; border: 0; font-size: 2rem; line-height: 1; cursor: pointer; color: #666; padding: 0; width: 2rem; height: 2rem; }
-        .welcome-offer-close:hover { color: #000; }
-        .welcome-offer-greeting { font-size: 1.1rem; color: #555; margin: 0 0 0.5rem; font-weight: 500; }
-        .welcome-offer-title { font-size: 1.6rem; color: #c0392b; margin: 0 0 1rem; line-height: 1.3; font-weight: 800; }
-        .welcome-offer-body { font-size: 1rem; color: #333; margin: 0 0 1.5rem; line-height: 1.5; }
-        .welcome-offer-phone { display: inline-block; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: #fff; font-size: 1.6rem; font-weight: 800; padding: 0.9rem 1.75rem; border-radius: 999px; text-decoration: none; box-shadow: 0 8px 20px rgba(231,76,60,0.4); transition: transform 0.15s ease, box-shadow 0.15s ease; }
-        .welcome-offer-phone:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(231,76,60,0.5); }
+        .welcome-offer-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.7); animation: welcomeFade 0.25s ease-out; }
+        .welcome-offer-card { position: relative; background: #fff; border-radius: 18px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 25px 70px rgba(0,0,0,0.5); animation: welcomePop 0.35s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; max-height: 92vh; overflow-y: auto; }
+        .welcome-offer-close { position: absolute; top: 0.6rem; right: 0.75rem; background: rgba(255,255,255,0.9); border: 0; font-size: 1.5rem; line-height: 1; cursor: pointer; color: #333; padding: 0; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .welcome-offer-close:hover { background: #fff; color: #000; transform: scale(1.05); }
+        .welcome-offer-image { position: relative; width: 100%; aspect-ratio: 16/8; overflow: hidden; }
+        .welcome-offer-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .welcome-offer-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.95) 100%); }
+        .welcome-offer-badge { position: absolute; top: 1rem; left: 1rem; background: #c0392b; color: #fff; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; padding: 0.35rem 0.7rem; border-radius: 4px; box-shadow: 0 4px 10px rgba(192,57,43,0.4); z-index: 1; animation: welcomePulse 1.8s ease-in-out infinite; }
+        .welcome-offer-savings { position: absolute; bottom: 0.5rem; right: 1rem; background: #fff; color: #c0392b; border: 3px solid #c0392b; border-radius: 50%; width: 86px; height: 86px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,0.25); transform: rotate(-8deg); z-index: 1; }
+        .welcome-offer-savings-amount { font-size: 1.15rem; font-weight: 900; line-height: 1; }
+        .welcome-offer-savings-label { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.05em; line-height: 1; margin-top: 2px; }
+        .welcome-offer-content { padding: 0.5rem 1.75rem 1.75rem; }
+        .welcome-offer-greeting { font-size: 1rem; color: #555; margin: 0 0 0.4rem; font-weight: 600; }
+        .welcome-offer-title { font-size: 1.55rem; color: #1a1a1a; margin: 0 0 0.85rem; line-height: 1.25; font-weight: 800; }
+        .welcome-offer-highlight { color: #c0392b; }
+        .welcome-offer-body { font-size: 0.95rem; color: #444; margin: 0 0 1rem; line-height: 1.5; }
+        .welcome-offer-stars { display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 0 0 1.25rem; font-size: 0.85rem; }
+        .welcome-offer-rating { font-weight: 800; color: #1a1a1a; font-size: 1rem; }
+        .welcome-offer-star-icons { color: #f39c12; letter-spacing: 1px; font-size: 1rem; }
+        .welcome-offer-reviews { color: #666; font-size: 0.82rem; flex-basis: 100%; }
+        .welcome-offer-phone { display: inline-flex; align-items: center; gap: 0.6rem; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: #fff; font-size: 1.35rem; font-weight: 800; padding: 0.95rem 1.75rem; border-radius: 999px; text-decoration: none; box-shadow: 0 8px 20px rgba(231,76,60,0.45); transition: transform 0.15s ease, box-shadow 0.15s ease; animation: welcomeRing 2.5s ease-in-out infinite; }
+        .welcome-offer-phone:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(231,76,60,0.55); }
+        .welcome-offer-disclaimer { font-size: 0.78rem; color: #777; margin: 1rem 0 0; font-weight: 500; }
         @keyframes welcomeFade { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes welcomePop { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
-        @media (max-width: 480px) { .welcome-offer-title { font-size: 1.35rem; } .welcome-offer-phone { font-size: 1.4rem; padding: 0.8rem 1.4rem; } }
+        @keyframes welcomePop { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes welcomePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+        @keyframes welcomeRing { 0%, 92%, 100% { transform: translateY(0) rotate(0deg); } 94% { transform: translateY(-1px) rotate(-3deg); } 96% { transform: translateY(-1px) rotate(3deg); } 98% { transform: translateY(-1px) rotate(-3deg); } }
+        @media (max-width: 480px) {
+            .welcome-offer-title { font-size: 1.3rem; }
+            .welcome-offer-phone { font-size: 1.15rem; padding: 0.85rem 1.4rem; }
+            .welcome-offer-savings { width: 72px; height: 72px; }
+            .welcome-offer-savings-amount { font-size: 0.95rem; }
+            .welcome-offer-savings-label { font-size: 0.72rem; }
+            .welcome-offer-content { padding: 0.5rem 1.25rem 1.5rem; }
+        }
     </style>
 
     <script>
