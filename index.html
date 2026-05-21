@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfectly Fast Moving - Affordable & Reliable Moving Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+      (function(i,n,v,o,c,a) { i.InvocaTagId = o; var s = n.createElement('script'); s.type = 'text/javascript';
+        s.async = true; s.src = ('https:' === n.location.protocol ? 'https://' : 'http://' ) + v;
+        var fs = n.getElementsByTagName('script')[0]; fs.parentNode.insertBefore(s, fs);
+      })(window, document, 'solutions.invocacdn.com/js/invoca-latest.min.js', '2009/2140176962');
+    </script>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="top-bar-left">
+                    <span class="license-info">LICENSED MOVING CARRIER</span>
+                    <span class="license-numbers">DOT: <span id="dotNumber">3516489</span> | MC: <span id="mcNumber">1197300</span></span>
+                </div>
+                <div class="top-bar-right">
+                    <a href="tel:+18458348101" class="phone-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        Call Now: 845-834-8101
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <div class="logo-container">
+                        <img src="https://www.perfectlyfastmoving.com/wp-content/webp-express/webp-images/themes/perfectlyfastov377/images/main-logo.png.webp" alt="Perfectly Fast Moving Logo" class="logo-img" onerror="this.onerror=null; this.src='https://www.perfectlyfastmoving.com/wp-content/themes/perfectlyfastov377/images/main-logo.png'; this.onerror=function(){this.style.display='none'; this.nextElementSibling.style.display='block';};">
+                        <span class="logo-text" style="display:none;">Perfectly Fast Moving</span>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#quote" class="btn-nav">Get Quote</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (form on right for better conversion) -->
+    <section id="quote" class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-left">
+                    <div class="hero-badges">
+                        <div class="trust-badge">
+                            <div class="rating">4.9/5.0</div>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="badge-number" id="familiesMoved">30,000+</div>
+                            <div class="badge-label">Families Moved</div>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="badge-number" id="recentBookings">12+</div>
+                            <div class="badge-label">Booked a move a few minutes ago</div>
+                        </div>
+                    </div>
+                    <h1 class="hero-title">Affordable Moving Services</h1>
+                    <p class="hero-subtitle">Find out how much we can help you save on your next move.<br>Request a free instant affordable moving quote now.</p>
+                    <div class="hero-cta">
+                        <a href="#quote" class="btn-primary btn-large">Get Instant Quote</a>
+                        <a href="tel:+18458348101" class="btn-secondary btn-large">Call Now: 845-834-8101</a>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <div class="quote-wrapper hero-form-card">
+                        <div class="quote-header">
+                            <h2>Get Instant Quote</h2>
+                            <p>Receive your free moving quote</p>
+                        </div>
+                        <form class="quote-form" id="quoteForm">
+                    <div class="form-step active" data-step="1">
+                        <h3 class="step-title">Location</h3>
+                        <div class="form-group">
+                            <label for="pickup">Pickup *</label>
+                            <input type="text" id="pickup" name="pickup" placeholder="Enter pickup address or zipcode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Destination *</label>
+                            <input type="text" id="destination" name="destination" placeholder="Enter destination address or zipcode" required>
+                        </div>
+                        <button type="button" class="btn-primary btn-form" onclick="nextStep()">Next</button>
+                    </div>
+                    <div class="form-step" data-step="2">
+                        <h3 class="step-title">Details</h3>
+                        <div class="form-group">
+                            <label for="moveDate">Move Date *</label>
+                            <input type="date" id="moveDate" name="moveDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="moveSize">Moving Size *</label>
+                            <select id="moveSize" name="moveSize" required>
+                                <option value="">Select Move Size</option>
+                                <!-- Values chosen to match common Granot / Hello Moving conventions -->
+                                <option value="Studio">Studio</option>
+                                <option value="2Bedrooms">2 Bedrooms</option>
+                                <option value="3Bedrooms">3 Bedrooms</option>
+                                <option value="4Bedrooms">4 Bedrooms</option>
+                                <option value="5PlusBedrooms">5+ Bedrooms</option>
+                                <option value="Office">Office</option>
+                            </select>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="button" class="btn-secondary" onclick="prevStep()">Previous</button>
+                            <button type="button" class="btn-primary btn-form" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                    <div class="form-step" data-step="3">
+                        <h3 class="step-title">Quote</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstname">First Name *</label>
+                                <input type="text" id="firstname" name="firstname" placeholder="First name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname">Last Name *</label>
+                                <input type="text" id="lastname" name="lastname" placeholder="Last name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" required>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="smsConsent" required>
+                                <span class="sms-consent-text">By checking this box, you agree to receive SMS text messages from Perfectly Fast Moving at the number provided. Message frequency varies. Message &amp; data rates may apply. Reply HELP for help, STOP to opt out at any time. View our <a href="https://www.perfectlyfastmovingservices.com/privacy-policy.html" target="_blank" rel="noopener">privacy policy</a>.</span>
+                            </label>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="button" class="btn-secondary" onclick="prevStep()">Previous</button>
+                            <button type="submit" class="btn-primary btn-form">Get Free Quote</button>
+                        </div>
+                        <div class="form-help">
+                            <p>Need help? <a href="tel:+18458348101">Call Now: 845-834-8101</a></p>
+                        </div>
+                    </div>
+                    <div class="form-progress">
+                        <div class="progress-steps">
+                            <div class="progress-step">
+                                <span class="step-indicator active" data-step="1">1</span>
+                                <span class="step-label">Location</span>
+                            </div>
+                            <div class="progress-step">
+                                <span class="step-indicator" data-step="2">2</span>
+                                <span class="step-label">Details</span>
+                            </div>
+                            <div class="progress-step">
+                                <span class="step-indicator" data-step="3">3</span>
+                                <span class="step-label">Quote</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Complete Moving Solutions</h2>
+                <p>From packing and moving to storage and more. We know what it takes and have the moving experts ready to get you into your new home or office.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🚚</div>
+                    <h3>Long Distance Moves</h3>
+                    <p>Planning a move across the country or to a different state? Get a customized quote for an easy long distance move.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📦</div>
+                    <h3>Packing & Storage</h3>
+                    <p>Our moving team offers packing services to keep your items safe during the move and have storage options available afterwards.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Office Moves</h3>
+                    <p>Need to relocate your small or large office? Let's make it a breeze request an instant moving quote to help make moving your business to a new location a breeze.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎖️</div>
+                    <h3>Military Moves</h3>
+                    <p>Perfectly Fast Moving proudly supports military families. We are proud to be a premier choice in helping military families with their moving needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline CTA between sections -->
+    <div class="section-inline-cta">
+        <div class="container">
+            <div class="section-inline-cta-buttons">
+                <a href="tel:+18458348101" class="btn-secondary btn-large">Call 845-834-8101</a>
+                <a href="#quote" class="btn-primary btn-large">Get Free Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Perfectly Fast Moving</h2>
+                    <h3>Affordable Long Distance Moving Nationwide</h3>
+                    <p>Perfectly Fast Moving offers affordable, reliable, and fast moving services nationwide across the U.S. As a full-service moving company, we handle every aspect of your move with care and precision. Our highly trained team, durable packing materials, and well-maintained trucks ensure a smooth and efficient moving experience from start to finish.</p>
+                    <p>With years of experience, we are committed to delivering exceptional service for every client, every time.</p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Full-Service Moving Company</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Highly Trained Team</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Durable Packing Materials</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Well-Maintained Trucks</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://www.perfectlyfastmoving.com/wp-content/webp-express/webp-images/themes/perfectlyfastov377/images/btm1-img1.jpg.webp" alt="Moving services" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%23999%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EMoving Services%3C/text%3E%3C/svg%3E'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline CTA between sections -->
+    <div class="section-inline-cta">
+        <div class="container">
+            <div class="section-inline-cta-buttons">
+                <a href="tel:+18458348101" class="btn-secondary btn-large">Call 845-834-8101</a>
+                <a href="#quote" class="btn-primary btn-large">Get Free Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission Statement -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <h2>Our Mission Statement</h2>
+                <p>At Perfectly Fast Moving, our mission is to provide affordable, reliable, and fast moving services across the U.S. We are a full-service moving company, not a brokerage, and we handle every move directly. Our focus is on ensuring each move is safe, efficient, and handled with care and professionalism.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Review Sites Section -->
+    <section class="review-sites-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Top Rated on Leading Review Platforms</h2>
+                <p>We're proud to be highly rated across multiple trusted review sites</p>
+            </div>
+            <div class="review-sites-grid">
+                <div class="review-site-item">
+                    <div class="review-site-logo">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                        </svg>
+                    </div>
+                    <div class="review-site-name">Google</div>
+                    <div class="review-site-rating">4.9/5</div>
+                </div>
+                <div class="review-site-item">
+                    <div class="review-site-logo">
+                        <img src="https://mygoodmovers.com/assets/image/logo/logo.png" alt="My Good Movers Logo" style="width: 80px; height: 80px; object-fit: contain;">
+                    </div>
+                    <div class="review-site-name">My Good Movers</div>
+                    <div class="review-site-rating">4.8/5</div>
+                </div>
+                <div class="review-site-item">
+                    <div class="review-site-logo">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="#00b67a" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1 17l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="review-site-name">Trustpilot</div>
+                    <div class="review-site-rating">Excellent</div>
+                </div>
+                <div class="review-site-item">
+                    <div class="review-site-logo">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="#ff6b35" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div class="review-site-name">HomeAdvisor</div>
+                    <div class="review-site-rating">Top Rated</div>
+                </div>
+                <div class="review-site-item">
+                    <div class="review-site-logo">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="#ff6600" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="review-site-name">Angi</div>
+                    <div class="review-site-rating">4.7/5</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline CTA between sections -->
+    <div class="section-inline-cta">
+        <div class="container">
+            <div class="section-inline-cta-buttons">
+                <a href="tel:+18458348101" class="btn-secondary btn-large">Call 845-834-8101</a>
+                <a href="#quote" class="btn-primary btn-large">Get Free Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+                <p>Don't just take our word for it - see what our satisfied customers have to say about their moving experience with us.</p>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"The guys from perfectly fast moving company, Rudy, Elijah, Akhamat, were super nice and helpful during this difficult, and overwhelming process. They were on time, helpful with packaging, and super friendly."</p>
+                    <p class="review-author">- Elizabeth Hofmann</p>
+                    <p class="review-date">September 16, 2024</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"The guys from perfectly fast moving, Rudy and Ilia were fast, on time and had no issue moving all my stuff from my apartment to my house. Delivery was fast and they were very helpful and professional."</p>
+                    <p class="review-author">- Maximo Salinas</p>
+                    <p class="review-date">September 15, 2024</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Perfectly fast moving Slava and Alex were wonderful! They were fast unpacked everything and set up my couch. So polite and courteous. Would give them a million stars if I could!"</p>
+                    <p class="review-author">- Kyla Wheeler</p>
+                    <p class="review-date">September 15, 2024</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Excellent service! The guys packed everything very well. Went to our storage unit and packed all of it in one day. Very happy with their service."</p>
+                    <p class="review-author">- Barbara Bondurant</p>
+                    <p class="review-date">September 14, 2024</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Awesome service! Very accommodating and efficient. They handled everything with care and made the move easy."</p>
+                    <p class="review-author">- Taylor Ivey</p>
+                    <p class="review-date">September 14, 2024</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Ruslan and Alex were amazing! We have never used movers before and were a bit nervous on how it would go. They were on time, efficient, kind, and explained the entire process to us."</p>
+                    <p class="review-author">- Pamela Boeko</p>
+                    <p class="review-date">September 14, 2024</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline CTA between sections -->
+    <div class="section-inline-cta">
+        <div class="container">
+            <div class="section-inline-cta-buttons">
+                <a href="tel:+18458348101" class="btn-secondary btn-large">Call 845-834-8101</a>
+                <a href="#quote" class="btn-primary btn-large">Get Free Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What services does Perfectly Fast Moving offer?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Perfectly Fast Moving provides a range of services including local and long-distance moving, residential and commercial relocations, packing and unpacking services, and storage solutions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I get a quote for my move?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To get a quote, you can fill out an online form on our website, call our customer service, or request an in-home estimate. We provide both free estimates and detailed quotes based on your moving needs.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What are the benefits of using a professional moving company?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Professional movers provide expertise, efficiency, and safety. They handle packing, loading, transportation, and unloading, reducing stress and minimizing the risk of damage to your belongings.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline CTA between sections -->
+    <div class="section-inline-cta">
+        <div class="container">
+            <div class="section-inline-cta-buttons">
+                <a href="tel:+18458348101" class="btn-secondary btn-large">Call 845-834-8101</a>
+                <a href="#quote" class="btn-primary btn-large">Get Free Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Save More With Perfectly Fast Moving</h2>
+                <p>Get competitive quotes and expert coordination for your long distance move</p>
+                <div class="cta-buttons">
+                    <a href="#quote" class="btn-primary btn-large">Request A Free Estimate</a>
+                    <a href="tel:+18554001090" class="btn-secondary btn-large">Call (855) 400-1090</a>
+                </div>
+                <p class="cta-note"><span id="ctaRecent">12+</span> booked a move a few minutes ago</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="support-section">
+        <div class="container">
+            <div class="support-content">
+                <h2>Support Is Available Every Step Of The Way</h2>
+                <p>Perfectly Fast Moving Customer Support is available every step of the way. From pickup to delivery we are there with you to help make your move a breeze.</p>
+                <div class="support-buttons">
+                    <a href="tel:+18458348101" class="btn-primary btn-large">Call 845-834-8101</a>
+                    <a href="#quote" class="btn-secondary btn-large">Get Instant Quote</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline CTA between sections -->
+    <div class="section-inline-cta">
+        <div class="container">
+            <div class="section-inline-cta-buttons">
+                <a href="tel:+18458348101" class="btn-secondary btn-large">Call 845-834-8101</a>
+                <a href="#quote" class="btn-primary btn-large">Get Free Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Perfectly Fast Moving</h3>
+                    <p>Affordable, reliable, and fast moving services across the U.S.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Long Distance Moves</a></li>
+                        <li><a href="#services">Local Moves</a></li>
+                        <li><a href="#services">Storage</a></li>
+                        <li><a href="#services">Packing & Unpacking</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Get Started</h4>
+                    <a href="#quote" class="btn-primary">Get Free Quote</a>
+                    <p class="footer-phone">Call: <a href="tel:+18458348101">845-834-8101</a></p>
+                    <p class="footer-hours">MON - SUN: 8am - 11pm</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Perfectly Fast Moving. All rights reserved.</p>
+                <p class="footer-license">LICENSED MOVING CARRIER | DOT: <span id="footerDotNumber">3516489</span> | MC: <span id="footerMcNumber">1197300</span></p>
+                <p class="footer-disclaimer">Perfectly Fast Moving is a full-service moving company, not a brokerage. We handle every move directly with care and professionalism.</p>
+                <p style="margin-top:0.5rem; font-size:0.85rem;">
+                    <a href="/privacy-policy.html" style="color:rgba(255,255,255,0.9); text-decoration:underline;" target="_blank" rel="noopener">Privacy Policy</a>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href="/terms-of-service.html" style="color:rgba(255,255,255,0.9); text-decoration:underline;" target="_blank" rel="noopener">Terms of Service</a>
+                </p>
+                <p style="margin-top:0.5rem; font-size:0.8rem; opacity:0.8;"><a href="lead-profile.html" style="color:rgba(255,255,255,0.9);">Lead Profile (staff)</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

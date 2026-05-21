@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long Distance Charges - Lead Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Nav Bar (Blue) -->
+    <nav class="top-nav">
+        <div class="top-nav-inner">
+            <a href="#">Handbook</a>
+            <a href="#">Entry Form</a>
+            <a href="#">Inventory</a>
+            <a href="#">Items not Moving</a>
+            <a href="#">Printed Estimate</a>
+            <a href="#" class="active">Charges</a>
+            <a href="#">Tasks List</a>
+            <a href="#">Payments</a>
+            <a href="#">Exit</a>
+            <div class="nav-status">
+                <span class="status-dot new">NEW RECURRING</span>
+                <span class="status-dot new">NEW LEADS TO ASSIGN</span>
+                <span class="status-dot">YOU GOT ESIGN</span>
+                <span class="status-dot">YOU GOT LEADS</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Title (Green) -->
+    <header class="page-title">
+        <h1>Long Distance Charges</h1>
+    </header>
+
+    <main class="profile-layout">
+        <!-- Left Column -->
+        <div class="left-col">
+            <!-- Moving From & Moving To -->
+            <section class="card move-addresses">
+                <div class="move-from">
+                    <h3>Moving From</h3>
+                    <a href="#" class="map-link">Google</a> View Map
+                    <div class="field-row">
+                        <label>Client Name</label>
+                        <span class="value" id="fromClientName">—</span>
+                    </div>
+                    <div class="field-row">
+                        <label>Address</label>
+                        <span class="value" id="fromAddress">—</span>
+                    </div>
+                    <div class="field-row">
+                        <label>Phone</label>
+                        <span class="value" id="fromPhone">—</span>
+                    </div>
+                    <div class="field-row">
+                        <label>Email</label>
+                        <span class="value" id="fromEmail">—</span>
+                    </div>
+                    <div class="field-row">
+                        <label>Email Status</label>
+                        <span class="value" id="emailStatus">—</span>
+                    </div>
+                    <div class="field-row">
+                        <label>E-sign Status</label>
+                        <span class="value" id="esignStatus">—</span>
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" class="btn btn-outline">Extra Stop/Notes</button>
+                        <button type="button" class="btn btn-primary">Submit Charges</button>
+                    </div>
+                </div>
+                <div class="move-to">
+                    <h3>Moving To</h3>
+                    <a href="#" class="map-link">Google</a> View Map
+                    <div class="field-row">
+                        <label>Client Name</label>
+                        <span class="value" id="toClientName">—</span>
+                    </div>
+                    <div class="field-row">
+                        <label>Address</label>
+                        <span class="value" id="toAddress">—</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pricing and Charges -->
+            <section class="card pricing-section">
+                <h3>Pricing and Charges</h3>
+                <div class="pricing-row">
+                    <label>Initial Price</label>
+                    <div class="inline-inputs">
+                        <input type="number" id="volumeCf" value="354" min="0" step="1"> cf
+                        <input type="number" id="pricePerCf" value="14.00" min="0" step="0.01"> per cf
+                        <label class="checkbox-inline"><input type="checkbox" id="lockPrice" checked> Lock:</label>
+                    </div>
+                    <span class="calc-value" id="initialPriceCalc">4956.00</span>
+                </div>
+                <div class="pricing-row">
+                    <label>Fuel Surcharge</label>
+                    <div class="inline-inputs">
+                        <input type="number" id="fuelPct" value="15.00" min="0" step="0.01"> %
+                    </div>
+                    <span class="calc-value" id="fuelSurchargeCalc">$743.40</span>
+                </div>
+                <div class="pricing-row others">
+                    <label>Others</label>
+                    <input type="number" class="short-input" value="0.00" step="0.01">
+                    <input type="number" class="short-input" value="0.00" step="0.01">
+                    <input type="number" class="short-input" value="0.00" step="0.01">
+                </div>
+                <div class="pricing-row subtotal">
+                    <label>Subtotal</label>
+                    <span class="calc-value" id="subtotalCalc">$5699.40</span>
+                </div>
+                <div class="pricing-row">
+                    <label>Coupon Discount</label>
+                    <label class="checkbox-inline"><input type="checkbox" id="couponDiscount"> </label>
+                    <input type="number" id="couponPct" value="0.00" min="0" step="0.01" class="short-input"> %
+                    <span class="calc-value" id="couponValue">-0.00</span>
+                </div>
+                <div class="pricing-row subtotal">
+                    <label>Subtotal (after coupon)</label>
+                    <span class="calc-value" id="subtotalAfterCoupon">$5699.40</span>
+                </div>
+                <div class="pricing-row">
+                    <label>Senior Citizen Discount</label>
+                    <label class="checkbox-inline"><input type="checkbox" id="seniorDiscount"> </label>
+                    <input type="number" id="seniorPct" value="5.00" min="0" step="0.01" class="short-input"> %
+                    <span class="calc-value" id="seniorValue">-0.00</span>
+                </div>
+            </section>
+
+            <!-- Level of Liability -->
+            <section class="card liability-section">
+                <h3>Level of Liability</h3>
+                <table class="liability-table">
+                    <thead>
+                        <tr>
+                            <th>Liability Amount</th>
+                            <th>Deductible</th>
+                            <th>Valuation Charge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$14868</td>
+                            <td>$0</td>
+                            <td>$0.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="release-value-row">
+                    <label class="checkbox-inline"><input type="checkbox" id="releaseValue" checked> Release Value</label>
+                    <span class="release-text">($0.60 Basic Valuation Protection)</span>
+                    <span class="calc-value">0.00</span>
+                </div>
+            </section>
+
+            <!-- Extra Charges -->
+            <section class="card extra-section">
+                <h3>Extra Charges</h3>
+                <div class="extra-row">
+                    <label>Extra</label>
+                    <input type="number" value="0.00" step="0.01" class="short-input">
+                    <input type="number" value="0.00" step="0.01" class="short-input">
+                    <input type="number" value="0.00" step="0.01" class="short-input">
+                </div>
+            </section>
+
+            <!-- Packing Materials -->
+            <section class="card packing-section">
+                <h3>Packing Materials</h3>
+                <div class="packing-row">
+                    <label>Packing</label>
+                    <select id="packingPackers"><option value="0">0 Packers</option><option value="1">1</option><option value="2">2</option></select>
+                    <input type="number" value="0" class="short-input" placeholder="hrs">
+                    <input type="number" value="0" class="short-input" placeholder="per hrs">
+                    <span class="calc-value">0.00</span>
+                </div>
+                <div class="packing-row">
+                    <label>Unpacking</label>
+                    <select id="unpackingPackers"><option value="0">0 Packers</option><option value="1">1</option><option value="2">2</option></select>
+                    <input type="number" value="0" class="short-input" placeholder="hrs">
+                    <input type="number" value="0" class="short-input" placeholder="per hrs">
+                    <span class="calc-value">0.00</span>
+                </div>
+                <div class="pricing-row subtotal">
+                    <label>Subtotal</label>
+                    <span class="calc-value" id="packingSubtotal">$5699.40</span>
+                </div>
+            </section>
+
+            <!-- Total Estimate -->
+            <section class="card total-section">
+                <div class="total-row">
+                    <label>Discount</label>
+                    <input type="number" id="discountAmount" value="2700.00" step="0.01" class="short-input">
+                </div>
+                <div class="total-row highlight">
+                    <label>Total Estimate</label>
+                    <span class="calc-value total" id="totalEstimate">$2999.40</span>
+                </div>
+                <div class="total-row">
+                    <label>Monthly Storage Fee</label>
+                    <input type="number" id="storageFee" value="0.00" step="0.01" class="short-input">
+                </div>
+                <a href="#" class="link">Auto Transport</a>
+                <div class="btn-row">
+                    <button type="button" class="btn btn-primary">Submit Charges</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-col">
+            <!-- Job Details -->
+            <section class="card job-details">
+                <h3>Job Details</h3>
+                <div class="field-row">
+                    <label>Job No</label>
+                    <span class="value highlight-red" id="jobNo">A2325462</span>
+                </div>
+                <div class="field-row">
+                    <label>Department</label>
+                    <select id="department"><option value="A">A</option><option value="B">B</option></select>
+                </div>
+                <div class="field-row">
+                    <label>Ref No</label>
+                    <input type="text" id="refNo" value="319512507">
+                </div>
+                <div class="field-row">
+                    <label>Status</label>
+                    <span class="value highlight-purple" id="status">Follow-Up</span>
+                </div>
+                <div class="field-row">
+                    <label>Priority</label>
+                    <span class="value" id="priority">Level-1</span>
+                </div>
+                <div class="field-row">
+                    <label>Cf-Lbs Ratio</label>
+                    <input type="number" id="cfLbsRatio" value="7.00" step="0.01" class="short-input">
+                </div>
+                <p class="calc-text" id="calcText">354 cf. @ $14.00 per cf.<br>2478 lbs. @ $2.00 per lbs.</p>
+                <div class="link-row">
+                    <a href="#">Calculate by lbs.</a>
+                    <a href="#">Switch to Local</a>
+                </div>
+                <button type="button" class="btn btn-primary full">Book This Job</button>
+                <div class="field-row">
+                    <label>Binding Type</label>
+                    <select id="bindingType"><option value="None">None</option></select>
+                </div>
+                <div class="field-row">
+                    <label class="checkbox-inline"><input type="checkbox" id="needStorage"> Need Storage</label>
+                </div>
+                <div class="field-row">
+                    <a href="#" class="link">Bad Lead? Select Why</a>
+                </div>
+                <div class="field-row">
+                    <label class="checkbox-inline"><input type="checkbox" id="vip"> VIP</label>
+                </div>
+            </section>
+
+            <!-- Date & Time -->
+            <section class="card dates-section">
+                <h3>Dates & Times</h3>
+                <div class="field-row">
+                    <label>Follow Up</label>
+                    <input type="date" id="followUpDate" value="2026-02-01">
+                    <input type="time" id="followUpTime" class="short-input">
+                </div>
+                <div class="field-row">
+                    <label>Box DLV</label>
+                    <input type="date" id="boxDlvDate">
+                    <input type="time" id="boxDlvTime" class="short-input">
+                </div>
+                <div class="field-row">
+                    <label>Pack Day</label>
+                    <input type="date" id="packDayDate">
+                    <input type="time" id="packDayTime" class="short-input">
+                </div>
+                <div class="field-row">
+                    <label>Visual Type</label>
+                    <select id="visualType"><option value="Waived">Waived</option></select>
+                </div>
+                <div class="field-row">
+                    <label>Pick-Up</label>
+                    <input type="date" id="pickUpDate" value="2026-03-31">
+                    <input type="time" id="pickUpTime" class="short-input">
+                    <span class="indicator-red"></span>
+                </div>
+                <div class="field-row">
+                    <label>Request Delivery (FADD)</label>
+                    <input type="date" id="requestDeliveryDate">
+                    <input type="time" id="requestDeliveryTime" class="short-input">
+                </div>
+                <div class="field-row">
+                    <label class="checkbox-inline"><input type="checkbox" id="deliverImmediately"> Deliver Immediately</label>
+                </div>
+                <div class="btn-row">
+                    <button type="button" class="btn btn-primary">Submit Charges</button>
+                    <button type="button" class="btn btn-outline">Update Users</button>
+                </div>
+            </section>
+
+            <!-- User/Agent -->
+            <section class="card user-section">
+                <div class="field-row">
+                    <label>Represent</label>
+                    <span class="value" id="represent">AUVRIAN</span>
+                </div>
+                <div class="field-row">
+                    <label>User</label>
+                    <input type="text" id="user" class="full-input">
+                </div>
+                <div class="field-row">
+                    <label>Agent</label>
+                    <input type="text" id="agent" class="full-input">
+                </div>
+                <button type="button" class="btn btn-outline">Carrier Notes</button>
+            </section>
+
+            <!-- Additional Info -->
+            <section class="card additional-section">
+                <div class="field-row">
+                    <label>Reference</label>
+                    <span class="value" id="reference">Angi</span>
+                </div>
+                <div class="field-row">
+                    <label>Location Type</label>
+                    <span class="value" id="locationType">Residential</span>
+                </div>
+                <div class="field-row">
+                    <label>Distance</label>
+                    <span class="value" id="distance">714 Miles</span>
+                </div>
+                <div class="field-row">
+                    <label>Open Date</label>
+                    <span class="value" id="openDate">02/01/2026 04:50:36 PM</span>
+                </div>
+                <button type="button" class="btn btn-primary full">Submit Charges</button>
+            </section>
+        </div>
+    </main>
+
+    <!-- Debug panel: visible at bottom so you can verify URL params and deployment -->
+    <section class="card debug-panel" style="margin-top:1rem; background:#f0f9ff; border:1px solid #0ea5e9;">
+        <h3>Debug</h3>
+        <p><strong>This page:</strong> <code id="debugUrl"></code></p>
+        <p><strong>Query params received:</strong> <pre id="debugParams"></pre></p>
+        <p><strong>To test with sample lead data</strong>, add this to the URL: <code>?firstname=Test&lastname=Lead&email=test@example.com&phone1=5551234567&ozip=10306&dzip=29680&label=BESTMOVING</code></p>
+        <p><a href="lead-profile.html">Open profile (no params)</a> | <a href="lead-profile.html?firstname=Dwight&lastname=Spears&email=spears2p@gmail.com&phone1=3479670867&ozip=10306&dzip=29680&label=BESTMOVING">Open with sample lead</a></p>
+    </section>
+
+    <script src="profile.js"></script>
+    <script>
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var obj = {};
+        params.forEach(function(v, k) { obj[k] = v; });
+        document.getElementById('debugUrl').textContent = window.location.href;
+        document.getElementById('debugParams').textContent = JSON.stringify(obj, null, 2) || '(none)';
+      })();
+    </script>
+</body>
+</html>

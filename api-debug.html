@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Debug – PFM</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Courier New', monospace; background: #0f0f0f; color: #e0e0e0; padding: 24px; }
+        h1 { color: #f97316; margin-bottom: 24px; font-size: 1.4rem; }
+        h2 { color: #94a3b8; font-size: 1rem; margin-bottom: 12px; margin-top: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .btn { background: #f97316; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-family: inherit; }
+        .btn:hover { background: #ea6c0a; }
+        .btn:disabled { background: #555; cursor: not-allowed; }
+        .btn-secondary { background: #3b82f6; margin-left: 10px; }
+        .btn-secondary:hover { background: #2563eb; }
+        pre { background: #111; border: 1px solid #222; border-radius: 6px; padding: 16px; overflow-x: auto; font-size: 0.82rem; line-height: 1.5; white-space: pre-wrap; word-break: break-all; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-left: 8px; }
+        .badge-ok { background: #166534; color: #4ade80; }
+        .badge-err { background: #7f1d1d; color: #f87171; }
+        .badge-warn { background: #78350f; color: #fbbf24; }
+        label { display: block; color: #94a3b8; font-size: 0.8rem; margin-bottom: 4px; margin-top: 12px; }
+        input, select { background: #111; border: 1px solid #333; color: #e0e0e0; padding: 8px 12px; border-radius: 6px; width: 100%; font-family: inherit; font-size: 0.88rem; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .status-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #222; }
+        .status-row:last-child { border-bottom: none; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+        .dot-ok { background: #4ade80; }
+        .dot-err { background: #f87171; }
+        #log-output { max-height: 500px; overflow-y: auto; }
+        .log-entry { border-left: 3px solid #333; padding: 12px; margin-bottom: 12px; background: #111; border-radius: 0 6px 6px 0; }
+        .log-entry.ok { border-left-color: #4ade80; }
+        .log-entry.err { border-left-color: #f87171; }
+        .log-time { color: #64748b; font-size: 0.75rem; }
+    </style>
+</head>
+<body>
+    <h1>PFM — API Debug Panel</h1>
+
+    <!-- ENV / Connection Test -->
+    <div class="card">
+        <h2>1. GHL Connection Test</h2>
+        <p style="color:#64748b; font-size:0.85rem; margin-bottom:16px;">Sends a test contact to GoHighLevel and shows the raw response.</p>
+        <button class="btn" onclick="testGHL()">Run GHL Test</button>
+        <div id="ghl-status" style="margin-top:16px;"></div>
+    </div>
+
+    <!-- Manual Lead Submission -->
+    <div class="card">
+        <h2>2. Submit Test Lead (Both APIs)</h2>
+        <p style="color:#64748b; font-size:0.85rem; margin-bottom:16px;">Submits a real lead through <code>/api/lead</code> — fires both Granot and GHL simultaneously.</p>
+        <div class="grid">
+            <div>
+                <label>First Name</label>
+                <input id="t-fname" value="Test" />
+            </div>
+            <div>
+                <label>Last Name</label>
+                <input id="t-lname" value="Lead" />
+            </div>
+            <div>
+                <label>Email</label>
+                <input id="t-email" value="test@perfectlyfastmoving.com" />
+            </div>
+            <div>
+                <label>Phone</label>
+                <input id="t-phone" value="5555550100" />
+            </div>
+            <div>
+                <label>Pickup Zip</label>
+                <input id="t-ozip" value="10001" />
+            </div>
+            <div>
+                <label>Destination Zip</label>
+                <input id="t-dzip" value="90001" />
+            </div>
+            <div>
+                <label>Move Date</label>
+                <input id="t-date" type="date" />
+            </div>
+            <div>
+                <label>Move Size</label>
+                <select id="t-size">
+                    <option value="Studio">Studio</option>
+                    <option value="2Bedrooms" selected>2 Bedrooms</option>
+                    <option value="3Bedrooms">3 Bedrooms</option>
+                </select>
+            </div>
+        </div>
+        <div style="margin-top:16px;">
+            <button class="btn" onclick="submitTestLead()">Submit Test Lead</button>
+        </div>
+        <div id="lead-status" style="margin-top:16px;"></div>
+    </div>
+
+    <!-- Log history -->
+    <div class="card">
+        <h2>3. Submission Log (This Session)</h2>
+        <button class="btn btn-secondary" style="margin-bottom:12px;" onclick="clearLog()">Clear</button>
+        <div id="log-output"><p style="color:#555;">No submissions yet.</p></div>
+    </div>
+
+    <script>
+        const log = [];
+
+        function ts() {
+            return new Date().toLocaleTimeString();
+        }
+
+        function renderLog() {
+            const el = document.getElementById('log-output');
+            if (!log.length) { el.innerHTML = '<p style="color:#555;">No submissions yet.</p>'; return; }
+            el.innerHTML = log.slice().reverse().map(e => `
+                <div class="log-entry ${e.ok ? 'ok' : 'err'}">
+                    <div class="log-time">${e.time} — ${e.label}</div>
+                    <pre>${JSON.stringify(e.data, null, 2)}</pre>
+                </div>
+            `).join('');
+        }
+
+        function clearLog() { log.length = 0; renderLog(); }
+
+        async function testGHL() {
+            const btn = event.target;
+            btn.disabled = true; btn.textContent = 'Testing...';
+            const el = document.getElementById('ghl-status');
+            el.innerHTML = '<p style="color:#94a3b8;">Sending test contact to GHL...</p>';
+            try {
+                const res = await fetch('/api/test-ghl');
+                const data = await res.json();
+                const ghl = data.ghl || {};
+                const ok = ghl.ok === true;
+                el.innerHTML = `
+                    <div class="status-row"><div class="dot ${data.env.GHL_API_KEY.startsWith('set') ? 'dot-ok' : 'dot-err'}"></div><span>GHL_API_KEY: <strong>${data.env.GHL_API_KEY}</strong></span></div>
+                    <div class="status-row"><div class="dot ${data.env.GHL_LOCATION_ID !== 'NOT SET' ? 'dot-ok' : 'dot-err'}"></div><span>GHL_LOCATION_ID: <strong>${data.env.GHL_LOCATION_ID}</strong></span></div>
+                    <div class="status-row"><div class="dot ${ok ? 'dot-ok' : 'dot-err'}"></div><span>GHL Response: <strong>HTTP ${ghl.status || 'N/A'}</strong> <span class="badge ${ok ? 'badge-ok' : 'badge-err'}">${ok ? 'OK' : 'FAILED'}</span></span></div>
+                    <pre style="margin-top:12px;">${JSON.stringify(data, null, 2)}</pre>
+                `;
+                log.push({ time: ts(), label: 'GHL Test', ok, data });
+            } catch (err) {
+                el.innerHTML = `<pre style="color:#f87171;">Error: ${err.message}</pre>`;
+                log.push({ time: ts(), label: 'GHL Test', ok: false, data: { error: err.message } });
+            }
+            renderLog();
+            btn.disabled = false; btn.textContent = 'Run GHL Test';
+        }
+
+        async function submitTestLead() {
+            const btn = event.target;
+            btn.disabled = true; btn.textContent = 'Submitting...';
+            const el = document.getElementById('lead-status');
+
+            const dateVal = document.getElementById('t-date').value || new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0];
+            const d = new Date(dateVal);
+            const movedte = `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}/${d.getFullYear()}`;
+
+            const params = new URLSearchParams();
+            params.set('label', 'BESTMOVING');
+            params.set('firstname', document.getElementById('t-fname').value);
+            params.set('lastname', document.getElementById('t-lname').value);
+            params.set('email', document.getElementById('t-email').value);
+            params.set('phone1', document.getElementById('t-phone').value.replace(/\D/g,'').slice(0,10));
+            params.set('movedte', movedte);
+            params.set('ozip', document.getElementById('t-ozip').value);
+            params.set('dzip', document.getElementById('t-dzip').value);
+            params.set('movesize', document.getElementById('t-size').value);
+            params.set('servtypeid', '102');
+
+            try {
+                const res = await fetch('/api/lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: params.toString()
+                });
+                const text = await res.text();
+                const parts = text.split(',');
+                const errId = parts[1] ? parts[1].trim() : '?';
+                const ok = errId === '0';
+                el.innerHTML = `
+                    <div class="status-row"><div class="dot ${ok ? 'dot-ok' : 'dot-err'}"></div><span>HTTP ${res.status} — Granot response: <strong>${text}</strong> <span class="badge ${ok ? 'badge-ok' : 'badge-err'}">${ok ? 'ACCEPTED' : 'ERROR'}</span></span></div>
+                    <p style="color:#64748b; font-size:0.8rem; margin-top:8px;">GHL response is logged server-side — check Vercel dashboard logs for [GHL] entries.</p>
+                `;
+                log.push({ time: ts(), label: 'Lead Submit (Granot+GHL)', ok, data: { params: Object.fromEntries(params), granot: text, httpStatus: res.status } });
+            } catch (err) {
+                el.innerHTML = `<pre style="color:#f87171;">Error: ${err.message}</pre>`;
+                log.push({ time: ts(), label: 'Lead Submit', ok: false, data: { error: err.message } });
+            }
+            renderLog();
+            btn.disabled = false; btn.textContent = 'Submit Test Lead';
+        }
+
+        // Set default move date to 7 days from now
+        document.getElementById('t-date').value = new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0];
+    </script>
+</body>
+</html>

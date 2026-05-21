@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory - Lead Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="inventory.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Nav Bar (Blue) -->
+    <nav class="top-nav">
+        <div class="top-nav-inner">
+            <a href="lead-profile.html">Entry Form</a>
+            <a href="inventory.html" class="active">Inventory</a>
+            <a href="#">Items not Moving</a>
+            <a href="#">Printed Estimate</a>
+            <a href="lead-profile.html">Charges</a>
+            <a href="#">Tasks List</a>
+            <a href="#">Payments</a>
+            <a href="#">Exit</a>
+        </div>
+    </nav>
+
+    <!-- Header (Submit, Job Number, Customer) -->
+    <header class="inventory-header">
+        <div class="inventory-header-inner">
+            <button type="button" class="btn btn-primary">Submit</button>
+            <span class="header-label">Job Number:</span>
+            <span class="header-value" id="jobNumber">2325462</span>
+            <span class="header-label">Customer:</span>
+            <span class="header-value" id="customerName">Dwight Spears</span>
+        </div>
+    </header>
+
+    <div class="inventory-layout">
+        <!-- Left Sidebar - Categories -->
+        <aside class="inventory-sidebar left">
+            <section class="card categories-card">
+                <h3>Categories</h3>
+                <div class="category-list" id="categoryList"></div>
+                <div class="action-buttons">
+                    <button type="button" class="btn-cat" data-filter="selected">Selected Items</button>
+                    <button type="button" class="btn-cat" data-filter="added">Added New Items</button>
+                    <button type="button" class="btn-cat active" data-filter="all">All Items</button>
+                    <button type="button" class="btn-cat" data-filter="clear">Clear All Items</button>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Center - Item Table -->
+        <main class="inventory-main">
+            <div class="table-wrap">
+                <table class="inventory-table">
+                    <thead>
+                        <tr>
+                            <th class="col-num">#</th>
+                            <th class="col-item">Item</th>
+                            <th class="col-volume">Volume</th>
+                            <th class="col-actions">Add / Deduct</th>
+                            <th class="col-qty">Qty.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody"></tbody>
+                </table>
+            </div>
+        </main>
+
+        <!-- Right Sidebar - Search, Add New, Total -->
+        <aside class="inventory-sidebar right">
+            <section class="card search-card">
+                <h3>Search by Item Name</h3>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search items...">
+                <label class="checkbox-inline search-within">
+                    <input type="checkbox" id="searchWithinName" checked>
+                    <span>✔ (within name)</span>
+                </label>
+            </section>
+            <section class="card add-new-card">
+                <h3>Add New Items</h3>
+                <div class="field-row">
+                    <label>Item</label>
+                    <input type="text" id="newItemName" class="full-input" placeholder="Item name">
+                </div>
+                <div class="field-row">
+                    <label>Volume</label>
+                    <input type="number" id="newItemVolume" class="short-input" min="0" step="1" value="0"> <span>cf</span>
+                </div>
+                <div class="field-row">
+                    <label>Qty</label>
+                    <input type="number" id="newItemQty" class="short-input" min="1" value="1">
+                </div>
+                <button type="button" class="btn btn-primary full" id="addNewItemBtn">Add New Item</button>
+            </section>
+            <section class="card total-card">
+                <h3>Total Volume</h3>
+                <p class="total-volume"><span id="totalVolume">0</span> cf</p>
+            </section>
+        </aside>
+    </div>
+
+    <script src="inventory-data.js"></script>
+    <script src="inventory.js"></script>
+</body>
+</html>

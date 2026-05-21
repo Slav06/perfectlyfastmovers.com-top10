@@ -1,0 +1,432 @@
+/* Lead Profile - Long Distance Charges */
+:root {
+    --nav-blue: #1e40af;
+    --title-green: #166534;
+    --title-green-dark: #14532d;
+    --border: #e5e7eb;
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --red: #dc2626;
+    --purple: #7c3aed;
+    --white: #fff;
+    --bg: #f9fafb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+}
+
+/* Top Nav (Blue) */
+.top-nav {
+    background: var(--nav-blue);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+}
+
+.top-nav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.top-nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.top-nav a:hover {
+    text-decoration: underline;
+}
+
+.top-nav a.active {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.nav-status {
+    margin-left: auto;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.status-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.status-dot::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+}
+
+.status-dot.new::before {
+    background: var(--red);
+}
+
+/* Page Title (Green) */
+.page-title {
+    background: var(--title-green);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+}
+
+.page-title h1 {
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Layout */
+.profile-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .profile-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards */
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
+
+/* Move From / Move To */
+.move-addresses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.move-from h3,
+.move-to h3 {
+    margin-bottom: 0.5rem;
+}
+
+.map-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.map-link:hover {
+    text-decoration: underline;
+}
+
+.field-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.field-row label {
+    min-width: 90px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.field-row .value {
+    flex: 1;
+    color: var(--text);
+}
+
+.field-row input[type="text"],
+.field-row input[type="number"],
+.field-row input[type="date"],
+.field-row input[type="time"],
+.field-row select {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.full-input {
+    flex: 1;
+    min-width: 120px;
+}
+
+.short-input {
+    width: 70px;
+    text-align: right;
+}
+
+.btn-row {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: var(--nav-blue);
+    color: var(--white);
+    border-color: var(--nav-blue);
+}
+
+.btn-primary:hover {
+    background: #1e3a8a;
+}
+
+.btn-outline {
+    background: var(--white);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.btn-outline:hover {
+    background: var(--bg);
+}
+
+.btn.full {
+    width: 100%;
+}
+
+/* Pricing */
+.pricing-section .pricing-row,
+.packing-section .packing-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.pricing-section label,
+.packing-section label {
+    min-width: 140px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.inline-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.inline-inputs input {
+    width: 70px;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    text-align: right;
+}
+
+.calc-value {
+    margin-left: auto;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.pricing-row.subtotal .calc-value,
+.total-row.highlight .calc-value {
+    font-size: 1rem;
+}
+
+.pricing-row.others .short-input {
+    width: 60px;
+}
+
+.checkbox-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+/* Liability */
+.liability-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.liability-table th,
+.liability-table td {
+    border: 1px solid var(--border);
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.liability-table th {
+    background: var(--bg);
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.release-value-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.release-value-row .release-text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.release-value-row .calc-value {
+    margin-left: auto;
+}
+
+/* Extra */
+.extra-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.extra-row label {
+    min-width: 60px;
+}
+
+/* Packing */
+.packing-row select {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    min-width: 100px;
+}
+
+/* Total */
+.total-section .total-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.total-section .total-row label {
+    min-width: 140px;
+}
+
+.total-row.highlight .calc-value.total {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--title-green);
+}
+
+.link {
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 0.875rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* Job Details */
+.calc-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.link-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.link-row a {
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.link-row a:hover {
+    text-decoration: underline;
+}
+
+.highlight-red {
+    color: var(--red);
+    font-weight: 600;
+}
+
+.highlight-purple {
+    color: var(--purple);
+    font-weight: 600;
+}
+
+.indicator-red {
+    width: 12px;
+    height: 12px;
+    background: var(--red);
+    border-radius: 2px;
+    display: inline-block;
+}
+
+/* Dates */
+.dates-section .field-row input[type="date"],
+.dates-section .field-row input[type="time"] {
+    min-width: 0;
+}
+
+.dates-section .field-row {
+    align-items: center;
+}
+
+.dates-section .short-input {
+    width: 90px;
+}
