@@ -1,11 +1,15 @@
-// Proxy lead to Pricerr (primary lead destination) and GoHighLevel (CRM record).
-// Top 10 site posts directly to Pricerr — no Dialerr / SMS step.
+// Proxy lead to Pricerr (primary), Dialerr (auto-text), and GoHighLevel (CRM).
+// All three fire in parallel. Pricerr success drives the response to the browser.
 // NOTE: This file is a Vercel serverless function (Node.js, CommonJS).
 
 const PRICERR_URL =
   process.env.PRICERR_WEBHOOK_URL ||
   'https://app.perfectlyfastmoving.com/api/v1/leads';
 const PRICERR_KEY = process.env.PRICERR_API_KEY || '';
+
+const DIALERR_WEBHOOK_URL =
+  process.env.DIALERR_WEBHOOK_URL ||
+  'https://api.dialerr.com/api/v1/webhooks/66a76bfcfb02cbbce16406c6a2ccb8b1';
 
 const GHL_CONTACTS_URL = 'https://services.leadconnectorhq.com/contacts/upsert';
 
@@ -85,6 +89,49 @@ async function sendToPricerr(contact) {
   }
 }
 
+/** Send lead to Dialerr webhook as JSON (auto-text platform). */
+async function sendToDialerr(contact) {
+  const payload = {
+    firstName: contact.firstname || '',
+    lastName: contact.lastname || '',
+    email: contact.email || '',
+    phone: contact.phone1 || contact.phone || '',
+    moveDate: contact.movedte || contact.movedate || contact.move_date || '',
+    moveSize: contact.movesize || contact.move_size || '',
+    originCity: contact.ocity || contact.origin_city || '',
+    originState: contact.ostate || contact.origin_state || '',
+    originZip: contact.ozip || contact.origin_zip || '',
+    destCity: contact.dcity || contact.dest_city || '',
+    destState: contact.dstate || contact.dest_state || '',
+    destZip: contact.dzip || contact.dest_zip || '',
+    pickup: contact.pickup || '',
+    destination: contact.destination || '',
+    refNo: contact.Ref_no || contact.leadno || '',
+    source: 'BESTMOVING',
+    raw: contact,
+  };
+
+  console.log('[DIALERR] Sending payload:', JSON.stringify(payload));
+
+  try {
+    const r = await fetch(DIALERR_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const text = await r.text();
+    if (r.ok) {
+      console.log('[DIALERR] Success:', r.status, text);
+      return { ok: true, status: r.status, body: text };
+    }
+    console.error('[DIALERR] Failed:', r.status, text);
+    return { ok: false, status: r.status, body: text };
+  } catch (err) {
+    console.error('[DIALERR] Request error:', err.message);
+    return { ok: false, error: err.message };
+  }
+}
+
 /** Send contact to GoHighLevel; returns result object for logging */
 async function sendToGHL(contact) {
   const apiKey = process.env.GHL_API_KEY;
@@ -156,15 +203,18 @@ module.exports = async (req, res) => {
 
     const form = parseFormBody(body);
 
-    // Send to Pricerr (primary) and GHL (CRM record) in parallel
-    const [pricerrResult, ghlResult] = await Promise.all([
+    // Send to Pricerr (primary), Dialerr (auto-text), and GHL (CRM) in parallel
+    const [pricerrResult, dialerrResult, ghlResult] = await Promise.all([
       sendToPricerr(form),
+      sendToDialerr(form),
       sendToGHL(form),
     ]);
 
     console.log(
       '[LEAD] Pricerr result:',
       JSON.stringify(pricerrResult),
+      '| Dialerr result:',
+      JSON.stringify(dialerrResult),
       '| GHL result:',
       JSON.stringify(ghlResult)
     );
