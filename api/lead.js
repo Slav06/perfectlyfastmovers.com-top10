@@ -26,19 +26,36 @@ async function sendToPricerr(contact) {
     return { skipped: true, reason: 'PRICERR_API_KEY not set' };
   }
 
+  const fullName = [contact.firstname, contact.lastname].filter(Boolean).join(' ').trim();
+  const movingFrom =
+    contact.pickup ||
+    contact.pickup_address ||
+    contact.from ||
+    [contact.ocity, contact.ostate, contact.ozip].filter(Boolean).join(', ') ||
+    contact.ozip ||
+    '';
+  const movingTo =
+    contact.destination ||
+    contact.dropoff_address ||
+    contact.to ||
+    [contact.dcity, contact.dstate, contact.dzip].filter(Boolean).join(', ') ||
+    contact.dzip ||
+    '';
+
   const payload = {
+    // Canonical field names Pricerr accepts:
+    customer_name: fullName,
+    phone: contact.phone1 || contact.phone || '',
+    email: contact.email || '',
+    moving_from: movingFrom,
+    moving_to: movingTo,
+    // Extra context (ignored by Pricerr if unknown, helpful for logs / future consumers):
     firstName: contact.firstname || '',
     lastName: contact.lastname || '',
-    email: contact.email || '',
-    phone: contact.phone1 || contact.phone || '',
     moveDate: contact.movedte || contact.movedate || contact.move_date || '',
     moveSize: contact.movesize || contact.move_size || '',
-    originCity: contact.ocity || contact.origin_city || '',
-    originState: contact.ostate || contact.origin_state || '',
-    originZip: contact.ozip || contact.origin_zip || '',
-    destCity: contact.dcity || contact.dest_city || '',
-    destState: contact.dstate || contact.dest_state || '',
-    destZip: contact.dzip || contact.dest_zip || '',
+    originZip: contact.ozip || '',
+    destZip: contact.dzip || '',
     refNo: contact.Ref_no || contact.leadno || '',
     source: 'BESTMOVING',
     raw: contact,

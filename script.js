@@ -266,6 +266,8 @@ if (quoteForm) {
         params.set('movedte', movedte);
         params.set('ozip', ozip);
         params.set('dzip', dzip);
+        params.set('pickup', pickup);
+        params.set('destination', destination);
         params.set('movesize', moveSize);
         params.set('servtypeid', '102'); // 102 = Long Distance Move per Developer Guide
         
