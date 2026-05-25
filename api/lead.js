@@ -1,11 +1,11 @@
-// Proxy lead to Dialerr (auto-text platform) and GoHighLevel (CRM record).
-// Dialerr texts the lead; on reply, Dialerr posts to /api/dialerr-webhook
-// which forwards the confirmed lead to Pricerr.
+// Proxy lead to Pricerr (primary lead destination) and GoHighLevel (CRM record).
+// Top 10 site posts directly to Pricerr — no Dialerr / SMS step.
 // NOTE: This file is a Vercel serverless function (Node.js, CommonJS).
 
-const DIALERR_WEBHOOK_URL =
-  process.env.DIALERR_WEBHOOK_URL ||
-  'https://api.dialerr.com/api/v1/webhooks/66a76bfcfb02cbbce16406c6a2ccb8b1';
+const PRICERR_URL =
+  process.env.PRICERR_WEBHOOK_URL ||
+  'https://app.perfectlyfastmoving.com/api/v1/leads';
+const PRICERR_KEY = process.env.PRICERR_API_KEY || '';
 
 const GHL_CONTACTS_URL = 'https://services.leadconnectorhq.com/contacts/upsert';
 
@@ -19,14 +19,19 @@ function parseFormBody(bodyStr) {
   return out;
 }
 
-/** Send lead to Dialerr webhook as JSON */
-async function sendToDialerr(contact) {
+/** Send lead to Pricerr as JSON with Bearer auth */
+async function sendToPricerr(contact) {
+  if (!PRICERR_KEY) {
+    console.warn('[PRICERR] Skipped — PRICERR_API_KEY not set');
+    return { skipped: true, reason: 'PRICERR_API_KEY not set' };
+  }
+
   const payload = {
     firstName: contact.firstname || '',
     lastName: contact.lastname || '',
     email: contact.email || '',
     phone: contact.phone1 || contact.phone || '',
-    moveDate: contact.movedate || contact.move_date || '',
+    moveDate: contact.movedte || contact.movedate || contact.move_date || '',
     moveSize: contact.movesize || contact.move_size || '',
     originCity: contact.ocity || contact.origin_city || '',
     originState: contact.ostate || contact.origin_state || '',
@@ -34,28 +39,31 @@ async function sendToDialerr(contact) {
     destCity: contact.dcity || contact.dest_city || '',
     destState: contact.dstate || contact.dest_state || '',
     destZip: contact.dzip || contact.dest_zip || '',
-    refNo: contact.Ref_no || '',
+    refNo: contact.Ref_no || contact.leadno || '',
     source: 'BESTMOVING',
     raw: contact,
   };
 
-  console.log('[DIALERR] Sending payload:', JSON.stringify(payload));
+  console.log('[PRICERR] Sending payload:', JSON.stringify(payload));
 
   try {
-    const r = await fetch(DIALERR_WEBHOOK_URL, {
+    const r = await fetch(PRICERR_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${PRICERR_KEY}`,
+      },
       body: JSON.stringify(payload),
     });
     const text = await r.text();
     if (r.ok) {
-      console.log('[DIALERR] Success:', r.status, text);
+      console.log('[PRICERR] Success:', r.status, text);
       return { ok: true, status: r.status, body: text };
     }
-    console.error('[DIALERR] Failed:', r.status, text);
+    console.error('[PRICERR] Failed:', r.status, text);
     return { ok: false, status: r.status, body: text };
   } catch (err) {
-    console.error('[DIALERR] Request error:', err.message);
+    console.error('[PRICERR] Request error:', err.message);
     return { ok: false, error: err.message };
   }
 }
@@ -131,29 +139,29 @@ module.exports = async (req, res) => {
 
     const form = parseFormBody(body);
 
-    // Send to Dialerr (primary — triggers auto-text) and GHL (CRM record) in parallel
-    const [dialerrResult, ghlResult] = await Promise.all([
-      sendToDialerr(form),
+    // Send to Pricerr (primary) and GHL (CRM record) in parallel
+    const [pricerrResult, ghlResult] = await Promise.all([
+      sendToPricerr(form),
       sendToGHL(form),
     ]);
 
     console.log(
-      '[LEAD] Dialerr result:',
-      JSON.stringify(dialerrResult),
+      '[LEAD] Pricerr result:',
+      JSON.stringify(pricerrResult),
       '| GHL result:',
       JSON.stringify(ghlResult)
     );
 
     // Frontend parses "LEADID,ERRID,message,..." and treats ERRID==='0' as success.
     res.setHeader('Content-Type', 'text/plain');
-    if (dialerrResult.ok) {
+    if (pricerrResult.ok) {
       const leadId = form.Ref_no || Date.now().toString();
       return res.status(200).send(`${leadId},0,OK,Lead received`);
     }
-    const errDetail = (dialerrResult.body || dialerrResult.error || 'unknown')
+    const errDetail = (pricerrResult.body || pricerrResult.error || pricerrResult.reason || 'unknown')
       .toString()
       .replace(/,/g, ' ');
-    return res.status(502).send(`0,1,Dialerr error,${errDetail}`);
+    return res.status(502).send(`0,1,Pricerr error,${errDetail}`);
   } catch (err) {
     console.error('Lead proxy error:', err);
     return res
