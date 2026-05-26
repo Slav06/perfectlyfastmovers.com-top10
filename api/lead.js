@@ -61,6 +61,10 @@ async function sendToPricerr(contact) {
     originZip: contact.ozip || '',
     destZip: contact.dzip || '',
     refNo: contact.Ref_no || contact.leadno || '',
+    // Google Ads attribution
+    gclid: contact.gclid || '',
+    gbraid: contact.gbraid || '',
+    wbraid: contact.wbraid || '',
     source: 'BESTMOVING',
     raw: contact,
   };
@@ -107,6 +111,9 @@ async function sendToDialerr(contact) {
     pickup: contact.pickup || '',
     destination: contact.destination || '',
     refNo: contact.Ref_no || contact.leadno || '',
+    gclid: contact.gclid || '',
+    gbraid: contact.gbraid || '',
+    wbraid: contact.wbraid || '',
     source: 'BESTMOVING',
     raw: contact,
   };
@@ -156,6 +163,9 @@ async function sendToGHL(contact) {
     payload.tags.push(`Ref:${contact.Ref_no}`);
     payload.sourceId = contact.Ref_no;
   }
+  if (contact.gclid)  payload.tags.push(`gclid:${contact.gclid}`);
+  if (contact.gbraid) payload.tags.push(`gbraid:${contact.gbraid}`);
+  if (contact.wbraid) payload.tags.push(`wbraid:${contact.wbraid}`);
 
   console.log('[GHL] Sending payload:', JSON.stringify(payload));
 

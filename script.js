@@ -204,34 +204,36 @@ function formatMoveDate(dateStr) {
 // POST to our API proxy (avoids CORS); proxy forwards to Hello Moving
 const LEAD_POST_URL = '/api/lead';
 
-// Capture clickid from URL and store it for form submission
-function getClickId() {
-    // Check URL parameters for clickid
+// Capture a URL param on page load and persist in sessionStorage so it survives navigation
+function captureParam(name) {
     const urlParams = new URLSearchParams(window.location.search);
-    const clickid = urlParams.get('clickid');
-    
-    // If found in URL, store it in sessionStorage to persist across navigation
-    if (clickid) {
-        sessionStorage.setItem('clickid', clickid);
-        console.log('[DEBUG] ClickID captured from URL:', clickid);
-        return clickid;
+    const fromUrl = urlParams.get(name);
+    if (fromUrl) {
+        sessionStorage.setItem(name, fromUrl);
+        console.log(`[DEBUG] ${name} captured from URL:`, fromUrl);
+        return fromUrl;
     }
-    
-    // If not in URL, check sessionStorage (in case user navigated from a page with clickid)
-    const storedClickId = sessionStorage.getItem('clickid');
-    if (storedClickId) {
-        console.log('[DEBUG] ClickID retrieved from sessionStorage:', storedClickId);
-    } else {
-        console.log('[DEBUG] No ClickID found in URL or sessionStorage');
-    }
-    return storedClickId || null;
+    const stored = sessionStorage.getItem(name);
+    if (stored) console.log(`[DEBUG] ${name} retrieved from sessionStorage:`, stored);
+    return stored || null;
 }
 
-// Initialize clickid capture on page load
+// Lead-provider click ID (?clickid=...)
+function getClickId() { return captureParam('clickid'); }
+
+// Google Ads click ID (?gclid=...) — auto-appended by Google when a user clicks a paid ad.
+// gbraid/wbraid are Google's privacy-safe alternatives used in iOS / restricted contexts.
+function getGclid()  { return captureParam('gclid'); }
+function getGbraid() { return captureParam('gbraid'); }
+function getWbraid() { return captureParam('wbraid'); }
+
+// Initialize on page load
 const capturedClickId = getClickId();
-if (capturedClickId) {
-    console.log('[DEBUG] ClickID initialized on page load:', capturedClickId);
-}
+const capturedGclid   = getGclid();
+getGbraid();
+getWbraid();
+if (capturedClickId) console.log('[DEBUG] ClickID initialized on page load:', capturedClickId);
+if (capturedGclid)   console.log('[DEBUG] gclid initialized on page load:', capturedGclid);
 
 // Quote form submission - POST to Hello Moving API
 const quoteForm = document.getElementById('quoteForm');
@@ -279,6 +281,14 @@ if (quoteForm) {
         } else {
             console.warn('[DEBUG] No ClickID available – leadno/Ref_no not sent');
         }
+
+        // Google Ads click IDs (sent so the lead provider can attribute conversions)
+        const gclid  = getGclid();
+        const gbraid = sessionStorage.getItem('gbraid');
+        const wbraid = sessionStorage.getItem('wbraid');
+        if (gclid)  { params.set('gclid', gclid);   console.log('[DEBUG] gclid added:', gclid); }
+        if (gbraid) { params.set('gbraid', gbraid); console.log('[DEBUG] gbraid added:', gbraid); }
+        if (wbraid) { params.set('wbraid', wbraid); console.log('[DEBUG] wbraid added:', wbraid); }
         
         // Log all parameters being sent (for debugging)
         console.log('[DEBUG] Form submission parameters:', Object.fromEntries(params));
