@@ -311,13 +311,14 @@ if (quoteForm) {
             console.log('[DEBUG] Response Status:', response.status);
             
             // API returns delimited string e.g. "104360,0,OK,6,6" (LEADID, ERRID, message, ...)
+            // On failure the trailing detail can itself contain commas, so join parts[2..] back together.
             const parts = text.split(',');
             const leadId = parts[0] ? parts[0].trim() : '';
             const errId = parts[1] ? parts[1].trim() : '';
-            const message = parts[2] ? parts[2].trim() : text;
-            
+            const message = parts.slice(2).join(',').trim() || text;
+
             console.log('[DEBUG] Parsed Response - LeadID:', leadId, 'ErrorID:', errId, 'Message:', message);
-            
+
             if (errId === '0') {
                 // Successful lead post – send user to a proper thank-you page
                 const recentBookings = parseInt(document.getElementById('recentBookings').textContent) || 12;
@@ -330,7 +331,8 @@ if (quoteForm) {
                 // Redirect to thank-you page (staff can customize content there)
                 window.location.href = 'thank-you.html';
             } else {
-                alert('There was a problem submitting your request. Please try again or call us at 878-287-2502. Error: ' + message);
+                console.error('[LEAD] Submission failed. Raw response:', text);
+                alert('There was a problem submitting your request. Please try again or call us at 878-287-2502.\n\nDetails: ' + message);
             }
         } catch (err) {
             console.error('Lead post error:', err);
